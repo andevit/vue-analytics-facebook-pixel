@@ -48,8 +48,9 @@ const init = (appId, data = {}) => {
  * Event tracking
  * @param  {String} name
  * @param  {object} [data={}]
+ * @param  {String} [eventID=null]
  */
-const event = (name, data = {}) => {
+const event = (name, data = {}, eventID = null) => {
   if (!_fbqEnabled()) return
 
   if (config.debug) {
@@ -59,7 +60,10 @@ const event = (name, data = {}) => {
     console.groupEnd()
   }
 
-  query('track', name, data)
+  if( eventID )
+    query('track', name, data, eventID)
+  else
+    query('track', name, data)
 }
 
 /**
