@@ -49,17 +49,21 @@ const init = (appId, data = {}) => {
  * @param  {String} name
  * @param  {object} [data={}]
  */
-const event = (name, data = {}) => {
+const event = (name, data = {}, eventID = null) => {
   if (!_fbqEnabled()) return
 
   if (config.debug) {
     console.groupCollapsed(
       `[Vue Facebook Pixel] Track event "${name}"`)
     console.log(`With data: ${data}`)
+    console.log(`eventID: ` + eventID)
     console.groupEnd()
   }
 
-  query('track', name, data)
+  if( eventID )
+    query('track', name, data, eventID)
+  else
+    query('track', name, data)
 }
 
 /**
